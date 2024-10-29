@@ -32,7 +32,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            padding: 20px;
         }
 
         .nav ul {
@@ -372,24 +372,106 @@
         const items = document.querySelectorAll('.carousel-item');
         let currentSlide = 0;
 
+        // 触摸滑动相关变量
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isDragging = false;
+        let startTranslate = 0;
+        let currentTranslate = 0;
+
+        // 触摸事件监听
+        carousel.addEventListener('touchstart', handleTouchStart, false);
+        carousel.addEventListener('touchmove', handleTouchMove, false);
+        carousel.addEventListener('touchend', handleTouchEnd, false);
+
+        // 鼠标事件监听（用于桌面端）
+        carousel.addEventListener('mousedown', handleTouchStart);
+        carousel.addEventListener('mousemove', handleTouchMove);
+        carousel.addEventListener('mouseup', handleTouchEnd);
+        carousel.addEventListener('mouseleave', handleTouchEnd);
+
+        function handleTouchStart(e) {
+            isDragging = true;
+            const touch = e.type === 'mousedown' ? e : e.touches[0];
+            touchStartX = touch.clientX;
+            startTranslate = currentTranslate;
+            
+            // 停止过渡动画
+            carousel.style.transition = 'none';
+            
+            // 清除自动播放定时器
+            clearInterval(autoPlayInterval);
+        }
+
+        function handleTouchMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const touch = e.type === 'mousemove' ? e : e.touches[0];
+            touchEndX = touch.clientX;
+            
+            const diff = touchEndX - touchStartX;
+            const newTranslate = startTranslate + diff;
+            
+            // 限制拖动范围
+            if (newTranslate > 0 || newTranslate < -((items.length - 1) * 100)) return;
+            
+            currentTranslate = newTranslate;
+            carousel.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function handleTouchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const moveDistance = touchEndX - touchStartX;
+            const threshold = window.innerWidth * 0.2; // 20%的屏幕宽度作为阈值
+            
+            carousel.style.transition = 'transform 0.3s ease-out';
+            
+            if (Math.abs(moveDistance) >= threshold) {
+                if (moveDistance > 0 && currentSlide > 0) {
+                    currentSlide--;
+                } else if (moveDistance < 0 && currentSlide < items.length - 1) {
+                    currentSlide++;
+                }
+            }
+            
+            updateCarousel();
+            startAutoPlay(); // 重新开始自动播放
+        }
+
+        function updateCarousel() {
+            currentTranslate = -(currentSlide * 100);
+            carousel.style.transform = `translateX(${currentSlide * -100}%)`;
+        }
+
+        // 自动播放
+        let autoPlayInterval;
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % items.length;
+                updateCarousel();
+            }, 5000);
+        }
+
+        // 按钮控制
         document.querySelector('.carousel-next').addEventListener('click', () => {
+            clearInterval(autoPlayInterval);
             currentSlide = (currentSlide + 1) % items.length;
             updateCarousel();
+            startAutoPlay();
         });
 
         document.querySelector('.carousel-prev').addEventListener('click', () => {
+            clearInterval(autoPlayInterval);
             currentSlide = (currentSlide - 1 + items.length) % items.length;
             updateCarousel();
+            startAutoPlay();
         });
 
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % items.length;
-            updateCarousel();
-        }, 5000);
+        // 初始化自动播放
+        startAutoPlay();
 
         const sections = document.querySelectorAll('section');
 
