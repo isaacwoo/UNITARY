@@ -203,17 +203,21 @@
             will-change: transform, opacity;
         }
 
-        .section-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
+        .section-content,.white-background,.black-background {
+            width: 80%;
+            min-height: 60vh;
             margin: 0 auto;
             padding: 40px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-            opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
         }
 
         .section-active .section-background {
@@ -225,24 +229,36 @@
             transform: translateY(0);
         }
 
-        #message .section-background {
-            background-image: url('./api/placeholder/present.jpg');
+        .first-content {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .first-content h2 {
+            padding: 100px 0;
+        }
+
+        #message {
+            background-image: url('./img/slide1.jpg');
+            padding: 250px 0;
         }
 
         #business .section-background {
-            background-image: url('./api/placeholder/1081.jpg');
+            background-image: url('./img/slide2.jpg');
         }
 
         #company .section-background {
-            background-image: url('./api/placeholder/1082.jpg');
+            background-image: url('./img/slide3.jpg');
         }
 
         #profile .section-background {
-            background-image: url('./api/placeholder/1083.jpg');
+            background-image: url('./img/slide4.jpg');
         }
 
         #contact .section-background {
-            background-image: url('./api/placeholder/1080.jpg');
+            background-image: url('./img/slide5.jpg');
         }
 
         .back-to-top {
@@ -273,6 +289,47 @@
         .back-to-top:hover {
             background-color: rgba(0, 0, 0, 0.8);
             transform: translateY(-3px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 40px;
+            font-weight: normal;
+        }
+
+        .content-style {
+            line-height: 50px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .black {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+
+        .op5 {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .w45 {
+            width: 45%;
+        }
+
+        .w100 {
+            width: 100%;
+        }
+
+        .none-background {
+            background: none;
+        }
+
+        .flex-wrap {
+            display: flex;
+            justify-content: space-between;
         }
 
         /* 适配移动端 */
@@ -326,11 +383,17 @@
         <button class="carousel-control carousel-next">></button>
     </div>
 
-    <section class="display-sec" id="message">
+    <div id="message">
+        <div class="first-content">
+            <h2>あるべき姿を実現する</h2>
+        </div>
+    </div>
+
+    <section class="display-sec" id="business">
         <div class="section-background"></div>
         <div class="section-content">
-            <h2>代表メッセージ</h2>
-            <div>
+            <h2 class="text-center title">代表メッセージ</h2>
+            <div class="content-style">
                 <p>わたしたちは、常にあるべき姿を考え、</p>
                 <p>確かな技術力でそれを実現し</p>
                 <p>お客様の可能性を最大限に引き出せるようサポートいたします。。</p> 
@@ -338,11 +401,11 @@
         </div>
     </section>
 
-    <section class="display-sec" id="business">
+    <section class="display-sec" id="company">
         <div class="section-background"></div>
-        <div class="section-content">
-            <h2>事業内容</h2>
-            <div>
+        <div class="section-content black">
+            <h2 class="text-center title">ZeroCoder</h2>
+            <div class="content-style">
                 <p>【自社製ノーコードフレームワーク ZeroCoder によるシステム開発】</p>
                 <p>20 年に渡って蓄積されたノウハウと実績に裏付けられた確かな技術力と提案力により、</p>
                 <p>多種多様な業務システムを安価かつスピーディに企画・開発いたします。</p> 
@@ -352,41 +415,42 @@
         </div>
     </section>
 
-    <section class="display-sec" id="company">
-        <div class="section-background"></div>
-        <div class="section-content">
-            <h2>会社概要</h2>
-            <div>
-                <p>会社名: 株式会社 UNITARY</p>
-                <p>所在地: 〒1500021 東京都渋谷区恵比寿西 2 丁目 4 番 8 号ウィンド恵比寿ビル 8F</p>
-                <p>設立日: 2024 年 11 月◯日</p>
-                <p>代表取締役: 中原華奈</p>
-                <p>資本金: 300 万円</p>
-                <p>従業員数: 5 名（役員含む）</p>
-                <p>事業内容: IT ソフトウェアの企画・開発・運用・保守</p>
-            </div>
-        </div>
-    </section>
-
     <section class="display-sec" id="profile">
         <div class="section-background"></div>
-        <div class="section-content">
-            <h2>代表プロフィール</h2>
-            <div>
-                <p>1996 年 神奈川県鎌倉市にて生まれる</p>
-                <p>2018 年 東京工業大学卒業（理学部物理学科）</p>
-                <p>2020 年 東京工業大学大学院卒業（情報理工学院情報工学系知能情報コース）</p>
-                <p>2020 年 日本アイ・ビー・エム株式会社に入社、多くのプロダクトの開発に携わる</p>
-                <p>2024 年 株式会社 UNITARY を立ち上げる</p>
+        <div class="section-content none-background w100">
+            <div class="flex-wrap">
+                <div class="white-background w45">
+                    <h2 class="title text-center">会社概要</h2>
+                    <div class="content-style">
+                        <p>会社名: 株式会社 UNITARY</p>
+                        <p>所在地: 〒1500021 東京都渋谷区恵比寿西 2 丁目 4 番 8 号ウィンド恵比寿ビル 8F</p>
+                        <p>設立日: 2024 年 11 月◯日</p>
+                        <p>代表取締役: 中原華奈</p>
+                        <p>資本金: 300 万円</p>
+                        <p>従業員数: 5 名（役員含む）</p>
+                        <p>事業内容: IT ソフトウェアの企画・開発・運用・保守</p>
+                    </div>
+                </div>
+                <div class="black-background black op5 w45">
+                    <h2 class="title text-center">代表プロフィール</h2>
+                    <div class="content-style">
+                        <p>1996 年 神奈川県鎌倉市にて生まれる</p>
+                        <p>2018 年 東京工業大学卒業（理学部物理学科）</p>
+                        <p>2020 年 東京工業大学大学院卒業（情報理工学院情報工学系知能情報コース）</p>
+                        <p>2020 年 日本アイ・ビー・エム株式会社に入社、多くのプロダクトの開発に携わる</p>
+                        <p>2024 年 株式会社 UNITARY を立ち上げる</p>
+                    </div>
+                </div>  
             </div>
+            
         </div>
     </section>
 
     <section class="display-sec" id="contact">
         <div class="section-background"></div>
-        <div class="section-content">
-            <h2>お問い合わせ</h2>
-            <p>info@unitary.jp</p>
+        <div class="section-content text-center">
+            <h2 class="title">お問い合わせ</h2>
+            <p class="content-style">info@unitary.jp</p>
         </div>
     </section>
 
